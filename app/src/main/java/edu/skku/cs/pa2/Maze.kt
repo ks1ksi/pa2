@@ -3,11 +3,8 @@ package edu.skku.cs.pa2
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
@@ -59,7 +56,7 @@ class Maze {
         val request = Request.Builder().url(url).build()
 
         try {
-            val response = client.newCall(request).execute() // This is synchronous
+            val response = client.newCall(request).execute()
             val body = response.body?.string()
             body?.let {
                 val jsonObject = JSONObject(it)
@@ -96,6 +93,5 @@ class Maze {
     override fun toString(): String {
         return "Maze(size=$size, cells=${cells.contentToString()})"
     }
-
 
 }

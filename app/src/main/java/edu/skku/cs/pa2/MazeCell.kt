@@ -13,5 +13,4 @@ class MazeCell {
         return "MazeCell(top=$top, bottom=$bottom, left=$left, right=$right, isPlayer=$isPlayer, isGoal=$isGoal, isHint=$isHint)"
     }
 
-
 }

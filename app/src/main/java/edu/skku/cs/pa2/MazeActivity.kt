@@ -13,7 +13,6 @@ class MazeActivity : AppCompatActivity() {
     private var turnCount = 0
     private var maze: Maze = Maze()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maze)
@@ -22,8 +21,7 @@ class MazeActivity : AppCompatActivity() {
         runBlocking {
             maze.loadMaze(mazeName!!)
             val mazeAdapter = MazeAdapter(
-                this@MazeActivity,
-                maze
+                this@MazeActivity, maze
             )
             renderMaze(mazeAdapter)
             Log.d("maze", maze.toString())
@@ -78,8 +76,6 @@ class MazeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Finish!", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
     private fun renderMaze(mazeAdapter: MazeAdapter) {

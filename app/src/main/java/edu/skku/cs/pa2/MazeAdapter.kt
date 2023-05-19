@@ -1,12 +1,10 @@
 package edu.skku.cs.pa2
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import androidx.core.view.marginBottom
 
 class MazeAdapter(private val context: MazeActivity, private val maze: Maze) : BaseAdapter() {
     override fun getCount(): Int = maze.size * maze.size

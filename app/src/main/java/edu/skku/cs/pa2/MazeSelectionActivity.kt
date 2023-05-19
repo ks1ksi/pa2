@@ -1,6 +1,7 @@
 package edu.skku.cs.pa2
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,30 +27,22 @@ class MazeSelectionActivity : AppCompatActivity() {
         usernameTextView = findViewById(R.id.username)
         explanationTextView = findViewById(R.id.explanation)
 
-        // Get the username from the SignInActivity
         val username = intent.getStringExtra("username")
         usernameTextView.text = username
 
-        // Send a HTTP GET request to the server to retrieve a list of mazes
-        val request = Request.Builder()
-            .url("http://swui.skku.edu:1399/maps")
-            .build()
+        val request = Request.Builder().url("http://swui.skku.edu:1399/maps").build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                // Handle the error
+                Log.e("Maze", "Failed to connect to the server", e)
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string()
-
                 if (response.isSuccessful && responseBody != null) {
                     val jsonArray = JSONArray(responseBody)
-
-                    // Create a list to store the mazes
                     val mazeData = mutableListOf<MazeData>()
 
-                    // Parse the JSON array
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val name = jsonObject.getString("name")
@@ -57,14 +50,16 @@ class MazeSelectionActivity : AppCompatActivity() {
                         mazeData.add(MazeData(name, size))
                     }
 
-                    // Update the ListView on the UI thread
                     runOnUiThread {
-                        val adapter =
-                            MazeListAdapter(this@MazeSelectionActivity, R.layout.maze_entry, mazeData)
+                        val adapter = MazeListAdapter(
+                            this@MazeSelectionActivity,
+                            R.layout.maze_entry,
+                            mazeData
+                        )
                         listView.adapter = adapter
                     }
                 } else {
-                    // Handle the error
+                    Log.e("Maze", "Failed to get maze list")
                 }
             }
         })
