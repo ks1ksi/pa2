@@ -31,20 +31,21 @@ class MazeAdapter(private val context: MazeActivity, private val maze: Maze) : B
         cellImageView.layoutParams.width = pixel
 
         val params = cellImageView.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(0, 0, 0, 0)
         if (cell.bottom) {
-            params.setMargins(0, 0, 0, marginPixel)
+            params.bottomMargin = marginPixel
             cellImageView.layoutParams.height -= marginPixel
         }
         if (cell.top) {
-            params.setMargins(0, marginPixel, 0, 0)
+            params.topMargin = marginPixel
             cellImageView.layoutParams.height -= marginPixel
         }
         if (cell.left) {
-            params.setMargins(marginPixel, 0, 0, 0)
+            params.leftMargin = marginPixel
             cellImageView.layoutParams.width -= marginPixel
         }
         if (cell.right) {
-            params.setMargins(0, 0, marginPixel, 0)
+            params.rightMargin = marginPixel
             cellImageView.layoutParams.width -= marginPixel
         }
         cellImageView.layoutParams = params

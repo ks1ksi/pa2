@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.runBlocking
 
@@ -40,6 +41,9 @@ class MazeActivity : AppCompatActivity() {
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }
+            if (maze.cells[maze.playerY][maze.playerX].isGoal) {
+                Toast.makeText(this, "Finish!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         rightButton.setOnClickListener {
@@ -47,6 +51,9 @@ class MazeActivity : AppCompatActivity() {
                 turnCount++
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
+            }
+            if (maze.cells[maze.playerY][maze.playerX].isGoal) {
+                Toast.makeText(this, "Finish!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -56,6 +63,9 @@ class MazeActivity : AppCompatActivity() {
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }
+            if (maze.cells[maze.playerY][maze.playerX].isGoal) {
+                Toast.makeText(this, "Finish!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         downButton.setOnClickListener {
@@ -63,6 +73,9 @@ class MazeActivity : AppCompatActivity() {
                 turnCount++
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
+            }
+            if (maze.cells[maze.playerY][maze.playerX].isGoal) {
+                Toast.makeText(this, "Finish!", Toast.LENGTH_SHORT).show()
             }
         }
 
