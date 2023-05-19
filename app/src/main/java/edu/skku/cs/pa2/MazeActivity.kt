@@ -32,10 +32,25 @@ class MazeActivity : AppCompatActivity() {
         val upButton: Button = findViewById(R.id.upButton)
         val downButton: Button = findViewById(R.id.downButton)
         val turnTextView: TextView = findViewById(R.id.turnTextView)
+        val hintButton: Button = findViewById(R.id.hintButton)
+
+        hintButton.setOnClickListener {
+            val hintCell = maze.findNextCell()
+            val y = hintCell.first
+            val x = hintCell.second
+            if (y != -1 && x != -1) {
+                maze.cells[y][x].isHint = true
+                renderMaze(MazeAdapter(this@MazeActivity, maze))
+            }
+            hintButton.isEnabled = false
+        }
 
         leftButton.setOnClickListener {
             if (maze.moveLeft()) {
                 turnCount++
+                if (maze.cells[maze.playerY][maze.playerX].isHint) {
+                    maze.cells[maze.playerY][maze.playerX].isHint = false
+                }
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }
@@ -47,6 +62,9 @@ class MazeActivity : AppCompatActivity() {
         rightButton.setOnClickListener {
             if (maze.moveRight()) {
                 turnCount++
+                if (maze.cells[maze.playerY][maze.playerX].isHint) {
+                    maze.cells[maze.playerY][maze.playerX].isHint = false
+                }
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }
@@ -58,6 +76,9 @@ class MazeActivity : AppCompatActivity() {
         upButton.setOnClickListener {
             if (maze.moveUp()) {
                 turnCount++
+                if (maze.cells[maze.playerY][maze.playerX].isHint) {
+                    maze.cells[maze.playerY][maze.playerX].isHint = false
+                }
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }
@@ -69,6 +90,9 @@ class MazeActivity : AppCompatActivity() {
         downButton.setOnClickListener {
             if (maze.moveDown()) {
                 turnCount++
+                if (maze.cells[maze.playerY][maze.playerX].isHint) {
+                    maze.cells[maze.playerY][maze.playerX].isHint = false
+                }
                 renderMaze(MazeAdapter(this@MazeActivity, maze))
                 turnTextView.text = "Turn: $turnCount"
             }

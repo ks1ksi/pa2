@@ -14,6 +14,53 @@ class Maze {
     var playerX: Int = 0
     var playerY: Int = 0
 
+    fun findNextCell(): Pair<Int, Int> {
+        // BFS
+        val queue = ArrayDeque<Pair<Int, Int>>()
+        val visited = Array(size) { Array(size) { false } }
+        val prev = Array(size) { Array(size) { Pair(-1, -1) } }
+
+        queue.add(Pair(playerY, playerX))
+        visited[playerY][playerX] = true
+
+        // 상 하 좌 우
+        val moves = listOf(Pair(-1, 0), Pair(1, 0), Pair(0, -1), Pair(0, 1))
+
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            val y = current.first
+            val x = current.second
+
+            if (cells[y][x].isGoal) {
+                var cellPosition = prev[y][x]
+                while (prev[cellPosition.first][cellPosition.second] != Pair(playerY, playerX)) {
+                    cellPosition = prev[cellPosition.first][cellPosition.second]
+                }
+                return cellPosition
+            }
+
+            for (move in moves) {
+                val nextY = y + move.first
+                val nextX = x + move.second
+                // 미로 벗어나지 않고, 방문하지 않았고, 벽이 아닌 경우
+                if (nextY in 0 until size && nextX in 0 until size
+                    && !visited[nextY][nextX]
+                    && !((move.first == -1 && cells[y][x].top)
+                            || (move.first == 1 && cells[y][x].bottom)
+                            || (move.second == -1 && cells[y][x].left)
+                            || (move.second == 1 && cells[y][x].right))) {
+                    queue.add(Pair(nextY, nextX))
+                    visited[nextY][nextX] = true
+                    prev[nextY][nextX] = Pair(y, x)
+                }
+            }
+        }
+
+        // error
+        return Pair(-1, -1)
+    }
+
+
     fun moveLeft(): Boolean {
         if (playerX == 0) return false
         if (cells[playerY][playerX].left) return false
